@@ -1,12 +1,27 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Market;
+namespace App\Http\Controllers\admin\ticket;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class TicketController extends Controller
 {
+
+    public function newTickets()
+    {
+        return view('admin.ticket.index');
+    }
+
+    public function openTickets()
+    {
+        return view('admin.ticket.index');
+    }
+
+    public function closeTickets()
+    {
+        return view('admin.ticket.index');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +29,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('admin.market.category.index');
+        return view('admin.ticket.index');
     }
 
     /**
@@ -24,7 +39,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.market.category.create');
+        //
     }
 
     /**
@@ -44,9 +59,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        return view('admin.ticket.show');
     }
 
     /**

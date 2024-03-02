@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin\Market;
+namespace App\Http\Controllers\Admin\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('admin.market.category.index');
+        return view('admin.user.customer.index');
+
     }
 
     /**
@@ -24,7 +25,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.market.category.create');
+        return view('admin.user.customer.create');
+
     }
 
     /**
