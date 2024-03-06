@@ -15,7 +15,18 @@ class CreateAddressesTable extends Migration
     {
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('city_id')->constrained('city_id');
+            $table->string('postal_code');
+            $table->text('address');
+            $table->string('no');
+            $table->string('unit');
+            $table->string('recipient_first_name');
+            $table->string('recipient_last_name');
+            $table->string('recipient_mobile');
+            $table->tinyInteger('status')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
