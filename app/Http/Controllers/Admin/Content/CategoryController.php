@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin\Content;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Content\PostCategoryRequest;
+use App\Models\Content\PostCategory;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -14,7 +16,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('admin.content.category.index');
+        $postCategories = PostCategory::query()->orderBy('created_at', 'desc')->simplePaginate(15);
+        return view('admin.content.category.index', compact('postCategories'));
     }
 
     /**
@@ -33,9 +36,11 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostCategoryRequest $request)
     {
-        //
+        $inputs = $request->all();
+        PostCategory::query()->create($inputs);
+        return redirect()->route('admin.content.category.index')->with('swal-success', 'عملیات افزودن دسته بندی پست با موفقیت انجام شد');
     }
 
     /**
@@ -57,7 +62,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $postCategory = PostCategory::query()->find($id);
+        return view('admin.content.category.edit', compact('postCategory'));
     }
 
     /**
@@ -67,9 +73,12 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostCategoryRequest $request, $id)
     {
-        //
+        $postCategory = PostCategory::query()->find($id);
+        $inputs = $request->all();
+        $postCategory->update($inputs);
+        return redirect()->route('admin.content.category.index')->with('swal-success', 'عملیات ویرایش دسته بندی پست با موفقیت انجام شد');;
     }
 
     /**
@@ -80,6 +89,26 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $postCategory = PostCategory::query()->find($id);
+        $postCategory->delete();
+        return redirect()->route('admin.content.category.index')->with('swal-success', 'عملیات حذف دسته بندی پست با موفقیت انجام شد');;;
+    }
+
+    public function status(PostCategory $postCategory){
+
+        $postCategory->status = $postCategory->status == 0 ? 1 : 0;
+        $result = $postCategory->save();
+        if($result){
+                if($postCategory->status == 0){
+                    return response()->json(['status' => true, 'checked' => false]);
+                }
+                else{
+                    return response()->json(['status' => true, 'checked' => true]);
+                }
+        }
+        else{
+            return response()->json(['status' => false]);
+        }
+
     }
 }
