@@ -10,7 +10,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class PostCategory extends Model
 {
     use HasFactory, SoftDeletes, Sluggable;
+
     protected $fillable = ['name', 'description', 'image', 'slug', 'status', 'tags'];
+    protected $casts = ['image' => 'array'];
 
     public function sluggable(): array
     {

@@ -7,8 +7,8 @@
 @section('content')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item font-size-12"> <a href="#">خانه</a></li>
-            <li class="breadcrumb-item font-size-12"> <a href="#">بخش فروش</a></li>
+            <li class="breadcrumb-item font-size-12"><a href="#">خانه</a></li>
+            <li class="breadcrumb-item font-size-12"><a href="#">بخش فروش</a></li>
             <li class="breadcrumb-item font-size-12 active" aria-current="page"> دسته بندی</li>
         </ol>
     </nav>
@@ -24,7 +24,8 @@
                 </section>
 
                 <section class="d-flex justify-content-between align-items-center mt-4 mb-3 border-bottom pb-2">
-                    <a href="{{ route('admin.content.category.create') }}" class="btn btn-info btn-sm">ایجاد دسته بندی</a>
+                    <a href="{{ route('admin.content.category.create') }}" class="btn btn-info btn-sm">ایجاد دسته
+                        بندی</a>
                     <div class="max-width-16-rem">
                         <input type="text" class="form-control form-control-sm form-text" placeholder="جستجو">
                     </div>
@@ -33,51 +34,53 @@
                 <section class="table-responsive">
                     <table class="table table-striped table-hover">
                         <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>نام دسته بندی</th>
-                                <th>توضیحات</th>
-                                <th>اسلاگ</th>
-                                <th>عکس</th>
-                                <th>تگ ها</th>
-                                <th>وضعیت</th>
-                                <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
-                            </tr>
+                        <tr>
+                            <th>#</th>
+                            <th>نام دسته بندی</th>
+                            <th>توضیحات</th>
+                            <th>اسلاگ</th>
+                            <th>عکس</th>
+                            <th>تگ ها</th>
+                            <th>وضعیت</th>
+                            <th class="max-width-16-rem text-center"><i class="fa fa-cogs"></i> تنظیمات</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            @foreach ($postCategories as $postCategory)
-                                <tr>
-                                    <th>1</th>
-                                    <td>{{ $postCategory->name }}</td>
-                                    <td>{{ $postCategory->description }}</td>
-                                    <td>{{ $postCategory->slug }}</td>
-                                    <td>
-                                        <img src="{{ asset($postCategory->image) }}" alt="" width="50"
-                                            height="50">
-                                    </td>
-                                    <td>{{ $postCategory->tags }}</td>
-                                    <td>
-                                        <label>
-                                            <input id="{{ $postCategory->id }}"
-                                                onchange="changeStatus({{ $postCategory->id }})"
-                                                data-url="{{ route('admin.content.category.status', $postCategory->id) }}"
-                                                type="checkbox" @if ($postCategory->status === 1) checked @endif>
-                                        </label>
-                                    </td>
-                                    <td class="width-16-rem text-left">
-                                        <a href="{{ route('admin.content.category.edit', $postCategory->id) }}"
-                                            class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
-                                        <form class="d-inline"
-                                            action="{{ route('admin.content.category.destroy', $postCategory->id) }}"
-                                            method="post">
-                                            @csrf
-                                            {{ method_field('delete') }}
-                                            <button class="btn delete btn-danger btn-sm" type="submit"><i
-                                                    class="fa fa-trash-alt"></i> حذف</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
+                        @foreach ($postCategories as $postCategory)
+                            <tr>
+                                <th>1</th>
+                                <td>{{ $postCategory->name }}</td>
+                                <td>{{ $postCategory->description }}</td>
+                                <td>{{ $postCategory->slug }}</td>
+                                <td>
+                                    <img src="{{ asset($postCategory->image['indexArray'][$postCategory->image['currentImage']]) }}"
+                                         alt="" width="50"
+                                         height="50">
+                                </td>
+                                <td>{{ $postCategory->tags }}</td>
+                                <td>
+                                    <label>
+                                        <input id="{{ $postCategory->id }}"
+                                               onchange="changeStatus({{ $postCategory->id }})"
+                                               data-url="{{ route('admin.content.category.status', $postCategory->id) }}"
+                                               type="checkbox" @if ($postCategory->status === 1) checked @endif>
+                                    </label>
+                                </td>
+                                <td class="width-16-rem text-left">
+                                    <a href="{{ route('admin.content.category.edit', $postCategory->id) }}"
+                                       class="btn btn-primary btn-sm"><i class="fa fa-edit"></i> ویرایش</a>
+                                    <form class="d-inline"
+                                          action="{{ route('admin.content.category.destroy', $postCategory->id) }}"
+                                          method="post">
+                                        @csrf
+                                        {{ method_field('delete') }}
+                                        <button class="btn delete btn-danger btn-sm" type="submit"><i
+                                                    class="fa fa-trash-alt"></i> حذف
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
 
 
                         </tbody>
@@ -98,7 +101,7 @@
             $.ajax({
                 url: url,
                 type: "GET",
-                success: function(response) {
+                success: function (response) {
                     if (response.status) {
                         if (response.checked) {
                             element.prop('checked', true);
@@ -112,7 +115,7 @@
                         errorToast('هنگام ویرایش مشکلی بوجود امده است')
                     }
                 },
-                error: function() {
+                error: function () {
                     element.prop('checked', elementValue);
                     errorToast('ارتباط برقرار نشد')
                 }
@@ -130,7 +133,7 @@
                     '</section>';
 
                 $('.toast-wrapper').append(successToastTag);
-                $('.toast').toast('show').delay(5500).queue(function() {
+                $('.toast').toast('show').delay(5500).queue(function () {
                     $(this).remove();
                 })
             }
@@ -147,7 +150,7 @@
                     '</section>';
 
                 $('.toast-wrapper').append(errorToastTag);
-                $('.toast').toast('show').delay(5500).queue(function() {
+                $('.toast').toast('show').delay(5500).queue(function () {
                     $(this).remove();
                 })
             }
